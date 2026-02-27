@@ -9,7 +9,7 @@ const POLYGON_CHAIN_ID = '0x89' // 137 in hex
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PrivyProvider
-      appId="cmm588zgq01vm0djp72q9y3z4"
+      appId={import.meta.env.VITE_PRIVY_APP_ID}
       config={{
         appearance: {
           theme: 'light',
