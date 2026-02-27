@@ -2541,7 +2541,22 @@ body.dark .delta-dn {
 
 .hover-opacity:hover {
   opacity: 1;
+}
+
+.hover-invert {
+  transition: all 0.2s ease;
+}
+
+.hover-invert:hover {
   color: #000 !important;
+}
+
+.hover-invert-light {
+  transition: all 0.2s ease;
+}
+
+.hover-invert-light:hover {
+  color: #fff !important;
 }
 
 .cursor-pointer {

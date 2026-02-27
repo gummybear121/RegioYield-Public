@@ -70,9 +70,9 @@ export default function Landing() {
             <span style={{ color: '#000' }}>RegioYield Protocol</span>
           </div>
           <div className="landing-nav-links">
-            <Link to="/pools" className="type-label hover-opacity" style={{ textDecoration: 'none', color: '#666' }}>Markets</Link>
-            <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Governance</span>
-            <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Developers</span>
+            <Link to="/pools" className="type-label hover-invert" style={{ textDecoration: 'none', color: '#666' }}>Markets</Link>
+            <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Governance</span>
+            <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Developers</span>
           </div>
           <div className="landing-nav-actions">
             <button 
@@ -161,9 +161,9 @@ export default function Landing() {
           </div>
           
           <div className="landing-solution animate-enter delay-300" style={{ background: '#000', color: '#fff', border: '1px solid #000' }}>
-            <span className="type-label" style={{ color: '#999' }}>The Solution</span>
-            <h2 style={{ color: '#fff' }}>Native Stablecoin Vaults.</h2>
-            <p style={{ color: '#999' }}>
+            <span className="type-label hover-invert-light" style={{ color: '#999', cursor: 'pointer' }}>The Solution</span>
+            <h2 className="hover-invert-light" style={{ color: '#fff', cursor: 'pointer' }}>Native Stablecoin Vaults.</h2>
+            <p className="hover-invert-light" style={{ color: '#999', cursor: 'pointer' }}>
               Mint and deposit BRZ, EURC, and JPYC directly. Zero conversion fees. Auto-compounding native yield strategies.
             </p>
           </div>
@@ -210,9 +210,9 @@ export default function Landing() {
             </div>
             
             <div className="landing-footer-right">
-              <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Twitter</span>
-              <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Discord</span>
-              <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Github</span>
+              <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Twitter</span>
+              <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Discord</span>
+              <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Github</span>
             </div>
           </div>
         </footer>
