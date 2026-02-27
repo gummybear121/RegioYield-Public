@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 
 const markets = [
-  { ticker: 'EURC', name: 'Euro Coin', tvl: '€14,204,992', strategy: 'Curve/Convex Loop', apy: '8.42%' },
-  { ticker: 'BRZ', name: 'Brazilian Digital Token', tvl: 'R$45,100,230', strategy: 'Aave V3 Leverage', apy: '12.05%' },
-  { ticker: 'JPYC', name: 'JPY Coin', tvl: '¥802,440,000', strategy: 'Uniswap V3 Delta Neutral', apy: '4.18%' },
+  { ticker: 'BRZ', name: 'Brazilian Real', tvl: '$142,402,190', strategy: 'Curve V2', apy: '8.92%' },
+  { ticker: 'JPYC', name: 'Japanese Yen', tvl: '$89,000,000', strategy: 'Uniswap V3', apy: '14.2%' },
+  { ticker: 'XSGD', name: 'Singapore Dollar', tvl: '$10,650,000', strategy: 'StraitsX', apy: '4.18%' },
+  { ticker: 'XIDR', name: 'Indonesian Rupiah', tvl: '$5,200,000', strategy: 'StraitsX', apy: '5.2%' },
 ];
 
 export default function Landing() {

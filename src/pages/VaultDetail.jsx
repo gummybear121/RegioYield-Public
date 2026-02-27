@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import SuccessModal from '../components/SuccessModal';
 import WithdrawalModal from '../components/WithdrawalModal';
+import { getTokenBalance } from '../lib/tokens';
 
 const poolData = {
   brz: {
@@ -29,10 +30,6 @@ const poolData = {
     inflation: '+3.2% Real',
     volatility: '0.08%',
     audit: 'VeriShield ✅',
-    balance: '4,500.00 BRZ',
-    projectedMonthly: '~32.40 BRZ',
-    gasEstimate: '$4.12',
-    protocolFee: '0.00%',
     aiInsight: 'BRZ liquidity is deepening in LATAM pools. High correlation with SELIC rates suggests yield stability for the next 45 days.',
   },
   jpyc: {
@@ -58,41 +55,7 @@ const poolData = {
     inflation: '+1.8% Real',
     volatility: '0.12%',
     audit: 'Halborn ✅',
-    balance: '12,500.00 JPYC',
-    projectedMonthly: '~148.00 JPYC',
-    gasEstimate: '$6.50',
-    protocolFee: '0.00%',
     aiInsight: 'JPYC pools show arbitrage opportunity due to recent forex volatility. Suggest allocation increase of 15%.',
-  },
-  eur: {
-    id: 'eur',
-    name: 'Euro Coin',
-    ticker: 'EURC',
-    contractAddress: null, // Not deployed on Polygon
-    decimals: 6,
-    region: 'EU',
-    regionClass: 'region-eu',
-    flagLargeClass: 'region-eu',
-    platform: 'Aave V3',
-    peg: 'EUR Pegged',
-    regionFull: 'EMEA',
-    tvl: '$620,000,000',
-    apy: '4.5%',
-    risk: 'A',
-    accent: 'lavender',
-    chartAccent: 'lavender',
-    protocol: 'Aave V3',
-    tokenStandard: 'ERC-20',
-    lpFee: '0.09%',
-    inflation: '+0.5% Real',
-    volatility: '0.03%',
-    audit: 'OpenZeppelin ✅',
-    balance: '2,100.00 EURC',
-    projectedMonthly: '~7.88 EURC',
-    gasEstimate: '$5.25',
-    protocolFee: '0.00%',
-    aiInsight: 'EUR stablecoin shows lowest volatility. ECB rate cuts may increase yields in coming months.',
-    note: 'Not on Polygon - available on Ethereum, Avalanche, Base',
   },
   xsgd: {
     id: 'xsgd',
@@ -117,10 +80,6 @@ const poolData = {
     inflation: '+0.1% Real',
     volatility: '0.01%',
     audit: 'Quantstamp ✅',
-    balance: '0.00 XSGD',
-    projectedMonthly: '~0.00 XSGD',
-    gasEstimate: '$3.50',
-    protocolFee: '0.00%',
     aiInsight: 'Singapore Dollar stablecoin backed 1:1 by SGD reserves. Licensed by MAS.',
   },
   xidr: {
@@ -146,146 +105,7 @@ const poolData = {
     inflation: '+2.5% Real',
     volatility: '0.15%',
     audit: 'Quantstamp ✅',
-    balance: '0.00 XIDR',
-    projectedMonthly: '~0.00 XIDR',
-    gasEstimate: '$3.50',
-    protocolFee: '0.00%',
     aiInsight: 'Indonesian Rupiah stablecoin. Licensed by Bank Indonesia.',
-  },
-  real: {
-    id: 'real',
-    name: 'RealToken',
-    ticker: 'REAL',
-    region: 'BR',
-    regionClass: 'region-br',
-    flagLargeClass: 'region-br',
-    platform: 'Balancer',
-    peg: 'BRL Pegged',
-    regionFull: 'LATAM',
-    tvl: '$45,000,000',
-    apy: '11.1%',
-    risk: 'C+',
-    accent: 'gold',
-    chartAccent: 'gold',
-    protocol: 'Balancer V2',
-    tokenStandard: 'ERC-20',
-    lpFee: '0.50%',
-    inflation: '+3.2% Real',
-    volatility: '0.18%',
-    audit: 'Trail of Bits ✅',
-    balance: '8,200.00 REAL',
-    projectedMonthly: '~75.95 REAL',
-    gasEstimate: '$8.00',
-    protocolFee: '0.10%',
-    aiInsight: 'Higher risk/reward profile. RealToken provides exposure to Brazilian real estate tokenization market.',
-  },
-  usdc: {
-    id: 'usdc',
-    name: 'USDC Reserve',
-    ticker: 'USDC',
-    region: 'US',
-    regionClass: 'region-us',
-    flagLargeClass: 'region-jp',
-    platform: 'Aave V3',
-    peg: 'USD Pegged',
-    regionFull: 'Global',
-    tvl: '$892,100,000',
-    apy: '5.12%',
-    risk: 'AA',
-    accent: 'lavender',
-    chartAccent: 'lavender',
-    protocol: 'Aave V3',
-    tokenStandard: 'ERC-20',
-    lpFee: '0.09%',
-    inflation: '+0.1% Real',
-    volatility: '0.01%',
-    audit: 'OpenZeppelin ✅',
-    balance: '10,000.00 USDC',
-    projectedMonthly: '~42.67 USDC',
-    gasEstimate: '$5.50',
-    protocolFee: '0.00%',
-    aiInsight: 'USDC reserve offers highest stability with institutional-grade backing. Ideal for risk-averse allocations.',
-  },
-  ars: {
-    id: 'ars',
-    name: 'ARS Arbitrage',
-    ticker: 'ARS',
-    region: 'AR',
-    regionClass: 'region-ar',
-    flagLargeClass: 'region-br',
-    platform: 'Uniswap V3',
-    peg: 'ARS Pegged',
-    regionFull: 'LATAM',
-    tvl: '$12,800,000',
-    apy: '24.5%',
-    risk: 'B+',
-    accent: 'gold',
-    chartAccent: 'gold',
-    protocol: 'Uniswap V3',
-    tokenStandard: 'ERC-20',
-    lpFee: '0.30%',
-    inflation: '+140% Real',
-    volatility: '2.5%',
-    audit: 'CertiK ✅',
-    balance: '5,000.00 ARS',
-    projectedMonthly: '~102.08 ARS',
-    gasEstimate: '$12.00',
-    protocolFee: '0.15%',
-    aiInsight: 'High volatility pool with significant arbitrage opportunities. Only for experienced traders.',
-  },
-  mxn: {
-    id: 'mxn',
-    name: 'MXN Liquidity',
-    ticker: 'MXN',
-    region: 'MX',
-    regionClass: 'region-mx',
-    flagLargeClass: 'region-br',
-    platform: 'Curve Finance',
-    peg: 'MXN Pegged',
-    regionFull: 'LATAM',
-    tvl: '$38,500,000',
-    apy: '11.2%',
-    risk: 'A-',
-    accent: 'gold',
-    chartAccent: 'gold',
-    protocol: 'Curve V2',
-    tokenStandard: 'ERC-20',
-    lpFee: '0.04%',
-    inflation: '+4.0% Real',
-    volatility: '0.15%',
-    audit: 'VeriShield ✅',
-    balance: '15,000.00 MXN',
-    projectedMonthly: '~140.00 MXN',
-    gasEstimate: '$4.50',
-    protocolFee: '0.00%',
-    aiInsight: 'Mexican peso pools showing strong performance. Good diversification option for LATAM exposure.',
-  },
-  eth: {
-    id: 'eth',
-    name: 'ETH LST Basket',
-    ticker: 'ETH',
-    region: 'Ξ',
-    regionClass: 'region-eth',
-    flagLargeClass: 'region-jp',
-    platform: 'Lido/Rocket',
-    peg: 'ETH Pegged',
-    regionFull: 'Global',
-    tvl: '$1,200,000,000',
-    apy: '3.95%',
-    risk: 'A',
-    accent: 'lavender',
-    chartAccent: 'lavender',
-    protocol: 'Lido + Rocket Pool',
-    tokenStandard: 'ERC-20',
-    lpFee: '0.10%',
-    inflation: 'N/A',
-    volatility: '0.05%',
-    audit: 'Sigma Prime ✅',
-    balance: '2.5 ETH',
-    projectedMonthly: '~0.082 ETH',
-    gasEstimate: '$15.00',
-    protocolFee: '0.00%',
-    aiInsight: 'ETH LST basket provides diversified staking yields. Excellent for long-term holders seeking yield on ETH holdings.',
   },
 };
 
@@ -301,11 +121,14 @@ export default function VaultDetail() {
   const [activeFilter, setActiveFilter] = useState('1M');
   const [showSuccess, setShowSuccess] = useState(false);
   const [showWithdrawal, setShowWithdrawal] = useState(false);
+  const [tokenBalance, setTokenBalance] = useState(null);
+  const [loadingBalance, setLoadingBalance] = useState(false);
   const { isDark, toggleTheme } = useTheme();
   const { login, logout, user, ready } = usePrivy();
   const { wallets } = useWallets();
 
   const isConnected = ready && !!user;
+  const walletAddress = wallets?.[0]?.address || user?.wallet?.address;
 
   const formatAddress = (address) => address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
 
@@ -327,6 +150,22 @@ export default function VaultDetail() {
     // Give a moment for wallet to be ready then switch to Polygon
     setTimeout(switchToPolygon, 500);
   };
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      if (isConnected && walletAddress && pool.contractAddress) {
+        setLoadingBalance(true);
+        try {
+          const balance = await getTokenBalance(pool.contractAddress, walletAddress);
+          setTokenBalance(balance);
+        } catch (err) {
+          console.error('Error fetching balance:', err);
+        }
+        setLoadingBalance(false);
+      }
+    };
+    fetchBalance();
+  }, [isConnected, walletAddress, pool.contractAddress, pool.id]);
 
   const navItems = [
     { label: 'Dashboard', path: '/app' },
@@ -522,7 +361,11 @@ export default function VaultDetail() {
               <div className="input-group">
                 <div style={{ display: 'flex', justifyContent: 'space-between', margin: '16px 0 8px', fontSize: '0.8rem', fontWeight: '600' }}>
                   <span>Amount</span>
-                  <span style={{ color: 'var(--text-secondary)' }}>Balance: {pool.balance}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>
+                    {loadingBalance ? 'Loading...' : 
+                     tokenBalance ? `${tokenBalance.formatted.toFixed(4)} ${tokenBalance.symbol}` : 
+                     pool.balance}
+                  </span>
                 </div>
                 <div className="input-wrapper">
                   <input type="text" className="vault-input" placeholder="0.00" />

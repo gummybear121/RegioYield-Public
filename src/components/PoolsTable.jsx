@@ -28,31 +28,31 @@ const poolData = [
   },
   {
     id: 3,
-    poolId: 'eur',
-    region: 'EU',
-    regionClass: 'region-eu',
-    name: 'Euro Coin',
-    peg: 'EUR Pegged',
-    platform: 'Aave V3',
-    tvl: '$620M',
+    poolId: 'xsgd',
+    region: 'SG',
+    regionClass: 'region-jp',
+    name: 'XSGD',
+    peg: 'SGD Pegged',
+    platform: 'StraitsX',
+    tvl: '$10.6M',
     risk: 'A',
-    yield: '4.5%',
+    yield: '4.18%',
   },
   {
     id: 4,
-    poolId: 'real',
-    region: 'BR',
-    regionClass: 'region-br',
-    name: 'RealToken',
-    peg: 'BRL Pegged',
-    platform: 'Balancer',
-    tvl: '$45M',
-    risk: 'C+',
-    yield: '11.1%',
+    poolId: 'xidr',
+    region: 'ID',
+    regionClass: 'region-jp',
+    name: 'XIDR',
+    peg: 'IDR Pegged',
+    platform: 'StraitsX',
+    tvl: '$5.2M',
+    risk: 'B+',
+    yield: '5.2%',
   },
 ];
 
-const filters = ['All', 'LATAM', 'APAC', 'EMEA'];
+const filters = ['All', 'LATAM', 'APAC'];
 
 export default function PoolsTable() {
   const [activeFilter, setActiveFilter] = useState('All');
