@@ -39,7 +39,7 @@ export default function Landing() {
 
   return (
     <div className="landing-page" style={{ 
-      backgroundColor: '#7A33FF', 
+      backgroundColor: '#FFFFFF', 
       minHeight: '100vh',
       fontFamily: "'Inter', sans-serif",
       overflowY: 'auto',
@@ -54,7 +54,7 @@ export default function Landing() {
               border: '1.5px solid #000', 
               transform: 'rotate(45deg)', 
               position: 'relative',
-              background: 'transparent'
+              background: '#000'
             }}>
               <div style={{
                 position: 'absolute',
@@ -63,25 +63,28 @@ export default function Landing() {
                 transform: 'translate(-50%, -50%)',
                 width: '8px',
                 height: '8px',
-                background: '#000'
+                background: '#fff',
+                borderRadius: '50%'
               }}></div>
             </div>
-            <span>RegioYield Protocol</span>
+            <span style={{ color: '#000' }}>RegioYield Protocol</span>
           </div>
           <div className="landing-nav-links">
-            <Link to="/pools" className="type-label hover-opacity" style={{ textDecoration: 'none', color: '#000' }}>Markets</Link>
-            <span className="type-label cursor-pointer hover-opacity">Governance</span>
-            <span className="type-label cursor-pointer hover-opacity">Developers</span>
+            <Link to="/pools" className="type-label hover-opacity" style={{ textDecoration: 'none', color: '#666' }}>Markets</Link>
+            <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Governance</span>
+            <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Developers</span>
           </div>
           <div className="landing-nav-actions">
             <button 
               className="type-label hover-opacity" 
               style={{ 
-                background: 'transparent', 
+                background: '#000', 
                 border: 'none', 
-                color: '#000', 
+                color: '#fff', 
                 cursor: 'pointer',
-                fontFamily: "'Inter', sans-serif"
+                fontFamily: "'Inter', sans-serif",
+                padding: '0.5rem 1rem',
+                borderRadius: '2rem'
               }}
               onClick={handleWalletClick}
             >
@@ -102,7 +105,8 @@ export default function Landing() {
                 letterSpacing: '-0.04em', 
                 textTransform: 'uppercase',
                 fontSize: 'clamp(3rem, 14vw, 8rem)',
-                marginBottom: '2rem'
+                marginBottom: '2rem',
+                color: '#000'
               }}>
                 LOCAL<br />
                 YIELD<br />
@@ -113,7 +117,7 @@ export default function Landing() {
 
             <div className="landing-hero-right animate-enter delay-100">
               <div className="landing-hero-text">
-                <p className="hero-description">
+                <p className="hero-description" style={{ color: '#666' }}>
                   The first decentralized liquidity layer for non-USD stablecoins. Earn native yield on EUR, JPY, and BRL.
                 </p>
               </div>
@@ -122,7 +126,7 @@ export default function Landing() {
                 <Link 
                   to={ready && user ? '/app' : '#'} 
                   className="btn-brutal landing-btn"
-                  style={{ animation: 'blink 1.5s infinite', textDecoration: 'none' }}
+                  style={{ animation: 'blink 1.5s infinite', textDecoration: 'none', background: '#000', color: '#fff', border: '1px solid #000' }}
                   onClick={(e) => {
                     if (!(ready && user)) {
                       e.preventDefault();
@@ -135,12 +139,12 @@ export default function Landing() {
                   Launch App 
                   <span className="btn-arrow">→</span>
                 </Link>
-                <button className="btn-brutal landing-btn">
+                <button className="btn-brutal landing-btn" style={{ background: '#fff', color: '#000', border: '1px solid #E5E5E5' }}>
                   Documentation
                 </button>
                 <div className="landing-secured">
-                  <span className="type-label">Secured by</span>
-                  <span className="landing-secured-name">Polygon PoS</span>
+                  <span className="type-label" style={{ color: '#999' }}>Secured by</span>
+                  <span className="landing-secured-name" style={{ color: '#666' }}>Polygon PoS</span>
                 </div>
               </div>
             </div>
@@ -148,27 +152,27 @@ export default function Landing() {
         </section>
 
         <section className="landing-problem-solution">
-          <div className="landing-problem animate-enter delay-200">
-            <span className="type-label">The Friction</span>
-            <h2>USD Dominance creates FX Risk for 90% of the world.</h2>
-            <p>
+          <div className="landing-problem animate-enter delay-200" style={{ background: '#F9FAFB', border: '1px solid #E5E5E5' }}>
+            <span className="type-label" style={{ color: '#666' }}>The Friction</span>
+            <h2 style={{ color: '#000' }}>USD Dominance creates FX Risk for 90% of the world.</h2>
+            <p style={{ color: '#666' }}>
               Global DeFi is dollar-denominated. Local users lose 2-5% on conversion slippage and face constant currency exposure. Your yield should match your spending power.
             </p>
           </div>
           
-          <div className="landing-solution animate-enter delay-300">
-            <span className="type-label">The Solution</span>
-            <h2>Native Stablecoin Vaults.</h2>
-            <p>
+          <div className="landing-solution animate-enter delay-300" style={{ background: '#000', color: '#fff', border: '1px solid #000' }}>
+            <span className="type-label" style={{ color: '#999' }}>The Solution</span>
+            <h2 style={{ color: '#fff' }}>Native Stablecoin Vaults.</h2>
+            <p style={{ color: '#999' }}>
               Mint and deposit BRZ, EURC, and JPYC directly. Zero conversion fees. Auto-compounding native yield strategies.
             </p>
           </div>
         </section>
 
-        <section className="landing-markets">
+        <section className="landing-markets" style={{ background: '#FFFFFF' }}>
           <div className="landing-markets-header">
-            <h3>Markets</h3>
-            <span className="type-label">Live APY</span>
+            <h3 style={{ color: '#000' }}>Markets</h3>
+            <span className="type-label" style={{ color: '#666' }}>Live APY</span>
           </div>
 
           {markets.map((market, idx) => (
@@ -177,37 +181,38 @@ export default function Landing() {
               className={`landing-market-row ${hoveredMarket === idx ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredMarket(idx)}
               onMouseLeave={() => setHoveredMarket(null)}
+              style={{ borderBottom: '1px solid #E5E5E5' }}
             >
               <div className="market-name">
-                <span className="market-ticker">{market.ticker}</span>
-                <span className="market-fullname">{market.name}</span>
+                <span className="market-ticker" style={{ color: '#000' }}>{market.ticker}</span>
+                <span className="market-fullname" style={{ color: '#666' }}>{market.name}</span>
               </div>
               <div className="market-tvl">
-                <span className="type-label">TVL</span>
-                <span className="market-value">{market.tvl}</span>
+                <span className="type-label" style={{ color: '#999' }}>TVL</span>
+                <span className="market-value" style={{ color: '#000' }}>{market.tvl}</span>
               </div>
               <div className="market-strategy">
-                <span className="type-label">Strategy</span>
-                <span className="strategy-name">{market.strategy}</span>
+                <span className="type-label" style={{ color: '#999' }}>Strategy</span>
+                <span className="strategy-name" style={{ color: '#666' }}>{market.strategy}</span>
               </div>
               <div className="market-apy">
-                <span className="apy-value">{market.apy}</span>
+                <span className="apy-value" style={{ color: '#16A34A' }}>{market.apy}</span>
               </div>
             </div>
           ))}
         </section>
 
-        <footer className="landing-footer">
+        <footer className="landing-footer" style={{ background: '#F9FAFB', borderTop: '1px solid #E5E5E5' }}>
           <div className="landing-footer-inner">
             <div className="landing-footer-left">
-              <span className="type-label">System Status: <span className="status-ok">● OPERATIONAL</span></span>
-              <span className="type-label">Block: 1402294</span>
+              <span className="type-label" style={{ color: '#666' }}>System Status: <span className="status-ok" style={{ color: '#16A34A' }}>● OPERATIONAL</span></span>
+              <span className="type-label" style={{ color: '#999' }}>Block: 1402294</span>
             </div>
             
             <div className="landing-footer-right">
-              <span className="type-label cursor-pointer hover-opacity">Twitter</span>
-              <span className="type-label cursor-pointer hover-opacity">Discord</span>
-              <span className="type-label cursor-pointer hover-opacity">Github</span>
+              <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Twitter</span>
+              <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Discord</span>
+              <span className="type-label cursor-pointer hover-opacity" style={{ color: '#666' }}>Github</span>
             </div>
           </div>
         </footer>

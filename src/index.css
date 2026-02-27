@@ -2140,8 +2140,9 @@ body.dark .delta-dn {
   top: 0;
   width: 100%;
   z-index: 50;
-  border-bottom: 1px solid #000;
-  background: #7A33FF;
+  border-bottom: 1px solid #E5E5E5;
+  background: #FFFFFF;
+  backdrop-filter: blur(12px);
 }
 
 .landing-nav-inner {
@@ -2185,13 +2186,15 @@ body.dark .delta-dn {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  border: 1px solid #000;
+  border: 1px solid #E5E5E5;
+  background: #FFFFFF;
 }
 
 .landing-hero {
   padding: 8rem 1.5rem 5rem;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #E5E5E5;
   flex: 1;
+  background: #FFFFFF;
 }
 
 .landing-hero-grid {
