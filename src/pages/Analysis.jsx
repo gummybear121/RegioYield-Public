@@ -92,9 +92,14 @@ function RiskSentimentCard() {
 
 function RegionalFeedCard() {
   const news = [
-    { source: 'Valor Econômico • Brazil', headline: 'Central Bank signals potential reserve requirement adjustments for 2024.' },
-    { source: 'Nikkei Asia • Japan', headline: 'Yen-backed stablecoins see 15% volume surge following Tokyo fintech summit.' },
-    { source: 'Les Echos • France', headline: 'MiCA compliance deadline approaching for Euro-pegged asset issuers.' },
+    { source: 'Valor Econômico • Brazil', headline: 'Central Bank signals potential reserve requirement adjustments for 2024.', url: 'https://example.com/news/1' },
+    { source: 'Nikkei Asia • Japan', headline: 'Yen-backed stablecoins see 15% volume surge following Tokyo fintech summit.', url: 'https://example.com/news/2' },
+    { source: 'Les Echos • France', headline: 'MiCA compliance deadline approaching for Euro-pegged asset issuers.', url: 'https://example.com/news/3' },
+    { source: 'CoinDesk • US', headline: 'Federal Reserve signals potential rate cuts in Q2 2024.', url: 'https://example.com/news/4' },
+    { source: 'Bloomberg • UK', headline: 'UK regulators propose new stablecoin framework for 2025.', url: 'https://example.com/news/5' },
+    { source: 'Reuters • Singapore', headline: 'MAS expands stablecoin licensing to include DeFi protocols.', url: 'https://example.com/news/6' },
+    { source: 'Financial Times • Global', headline: 'Global stablecoin market cap reaches $200B milestone.', url: 'https://example.com/news/7' },
+    { source: 'TechCrunch • US', headline: 'Major payment platforms integrate regional stablecoins.', url: 'https://example.com/news/8' },
   ];
 
   return (
@@ -103,22 +108,139 @@ function RegionalFeedCard() {
         <div className="cube-icon" style={{ background: 'var(--accent-gold-dim)' }}></div>
         Regional Feed
       </h2>
-      {news.map((item, idx) => (
-        <div className="news-item" key={idx} style={{ border: idx === news.length - 1 ? 'none' : undefined, margin: idx === news.length - 1 ? 0 : undefined }}>
-          <div className="news-source">{item.source}</div>
-          <div className="news-headline">{item.headline}</div>
-        </div>
-      ))}
+      <div className="news-scroll">
+        {news.map((item, idx) => (
+          <a href={item.url} target="_blank" rel="noopener noreferrer" className="news-item" key={idx}>
+            <div className="news-source">{item.source}</div>
+            <div className="news-headline">{item.headline}</div>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
 
 function ChatPanel() {
   const [input, setInput] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const formatMessage = (content) => {
+    const lines = content.split('\n');
+    const elements = [];
+    let listItems = [];
+
+    const processBold = (text) => {
+      const parts = text.split(/(\*\*.*?\*\*)/g);
+      return parts.map((part, i) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return <strong key={i}>{part.slice(2, -2)}</strong>;
+        }
+        return part;
+      });
+    };
+
+    const processLine = (line, idx) => {
+      const trimmed = line.trim();
+      
+      if (trimmed.startsWith('* **') || trimmed.startsWith('- **')) {
+        const match = trimmed.match(/^\* \*\*([^*]+)\*\*:? (.+)$/);
+        if (match) {
+          return <li key={idx}><strong>{match[1]}:</strong> {processBold(match[2])}</li>;
+        }
+      }
+      
+      if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+        return <li key={idx}>{processBold(trimmed.slice(2))}</li>;
+      }
+
+      if (trimmed.match(/^\d+\.\s/)) {
+        return <li key={idx}>{processBold(trimmed.replace(/^\d+\.\s/, ''))}</li>;
+      }
+
+      if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+        return <strong key={idx}>{trimmed.slice(2, -2)}</strong>;
+      }
+
+      return (
+        <span key={idx}>
+          {processBold(trimmed)}
+        </span>
+      );
+    };
+
+    lines.forEach((line, idx) => {
+      const trimmed = line.trim();
+      
+      if (trimmed.startsWith('* **') || trimmed.startsWith('- **') || trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+        if (listItems.length > 0) {
+          elements.push(<ul key={`list-${idx}`}>{listItems}</ul>);
+          listItems = [];
+        }
+        listItems.push(processLine(line, idx));
+      } else {
+        if (listItems.length > 0) {
+          elements.push(<ul key={`list-${idx}`}>{listItems}</ul>);
+          listItems = [];
+        }
+        if (trimmed) {
+          elements.push(<div key={idx}>{processLine(line, idx)}</div>);
+        }
+      }
+    });
+
+    if (listItems.length > 0) {
+      elements.push(<ul key="list-end">{listItems}</ul>);
+    }
+
+    return elements;
+  };
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+    
+    const userMessage = input.trim();
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': window.location.href,
+          'X-Title': 'RegioYield',
+        },
+        body: JSON.stringify({
+          model: 'google/gemini-2.0-flash-001',
+          messages: [
+            { role: 'system', content: 'You are a DeFi yield strategy assistant for RegioYield, a protocol providing yield through regional stablecoin pools (BRZ for LATAM, EURC for Europe, JPYC for APAC). Answer questions about yield optimization, risk assessment, and regional stablecoin strategies. Keep responses concise and actionable.' },
+            { role: 'user', content: userMessage }
+          ]
+        })
+      });
+
+      const data = await response.json();
+      const aiResponse = data.choices?.[0]?.message?.content || 'Sorry, I could not generate a response.';
+      setMessages(prev => [
+        { role: 'user', content: userMessage },
+        { role: 'ai', content: aiResponse }
+      ]);
+    } catch (error) {
+      setMessages(prev => [
+        ...prev,
+        { role: 'user', content: userMessage },
+        { role: 'ai', content: 'Sorry, something went wrong. Please try again.' }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && input.trim()) {
-      setInput('');
+      handleSend();
     }
   };
 
@@ -129,18 +251,35 @@ function ChatPanel() {
         Strategy Assistant
       </h2>
       <div className="chat-messages">
-        <div className="msg ai">
-          <div className="msg-label">Yield AI</div>
-          Hello. I am analyzing current yield spreads. Based on your risk profile, shifting 5% from EURC to BRZ could increase monthly yield by ~0.4% with minimal volatility exposure.
-        </div>
-        <div className="msg user">
-          <div className="msg-label">You</div>
-          What are the risks of increasing my JPYC allocation?
-        </div>
-        <div className="msg ai">
-          <div className="msg-label">Yield AI</div>
-          The primary risk for JPYC currently is low liquidity depth vs. BRZ. If the BoJ pivots unexpectedly, slippage on exit could negate yield gains.
-        </div>
+        {messages.length === 0 ? (
+          <>
+            <div className="msg ai">
+              <div className="msg-label">Yield AI</div>
+              Hello. I am analyzing current yield spreads. Based on your risk profile, shifting 5% from EURC to BRZ could increase monthly yield by ~0.4% with minimal volatility exposure.
+            </div>
+            <div className="msg user">
+              <div className="msg-label">You</div>
+              What are the risks of increasing my JPYC allocation?
+            </div>
+            <div className="msg ai">
+              <div className="msg-label">Yield AI</div>
+              The primary risk for JPYC currently is low liquidity depth vs. BRZ. If the BoJ pivots unexpectedly, slippage on exit could negate yield gains.
+            </div>
+          </>
+        ) : (
+          messages.map((msg, idx) => (
+            <div key={idx} className={`msg ${msg.role}`}>
+              <div className="msg-label">{msg.role === 'ai' ? 'Yield AI' : 'You'}</div>
+              {msg.role === 'ai' ? formatMessage(msg.content) : msg.content}
+            </div>
+          ))
+        )}
+        {isLoading && (
+          <div className="msg ai">
+            <div className="msg-label">Yield AI</div>
+            Thinking...
+          </div>
+        )}
       </div>
       <div className="chat-input-area">
         <input
@@ -150,8 +289,9 @@ function ChatPanel() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
+          disabled={isLoading}
         />
-        <div style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', fontWeight: '800', cursor: 'pointer' }}>
+        <div style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', fontWeight: '800', cursor: isLoading ? 'not-allowed' : 'pointer' }} onClick={isLoading ? undefined : handleSend}>
           ↵
         </div>
       </div>

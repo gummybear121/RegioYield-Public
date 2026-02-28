@@ -40,6 +40,18 @@ const poolData = [
   },
   {
     id: 4,
+    poolId: 'cngn',
+    region: 'NG',
+    regionClass: 'region-ng',
+    name: 'cNGN',
+    peg: 'NGN Pegged',
+    platform: 'Aave V3',
+    tvl: '$45M',
+    risk: 'B+',
+    yield: '12.5%',
+  },
+  {
+    id: 5,
     poolId: 'xidr',
     region: 'ID',
     regionClass: 'region-jp',
@@ -52,7 +64,7 @@ const poolData = [
   },
 ];
 
-const filters = ['All', 'LATAM', 'APAC'];
+const filters = ['All', 'LATAM', 'APAC', 'AFRICA'];
 
 export default function PoolsTable() {
   const [activeFilter, setActiveFilter] = useState('All');

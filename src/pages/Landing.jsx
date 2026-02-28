@@ -5,6 +5,7 @@ import { usePrivy, useWallets } from '@privy-io/react-auth';
 const markets = [
   { ticker: 'BRZ', name: 'Brazilian Real', tvl: '$142,402,190', strategy: 'Curve V2', apy: '8.92%' },
   { ticker: 'JPYC', name: 'Japanese Yen', tvl: '$89,000,000', strategy: 'Uniswap V3', apy: '14.2%' },
+  { ticker: 'cNGN', name: 'Nigerian Naira', tvl: '$45,000,000', strategy: 'Aave V3', apy: '12.5%' },
   { ticker: 'XSGD', name: 'Singapore Dollar', tvl: '$10,650,000', strategy: 'StraitsX', apy: '4.18%' },
   { ticker: 'XIDR', name: 'Indonesian Rupiah', tvl: '$5,200,000', strategy: 'StraitsX', apy: '5.2%' },
 ];
@@ -316,6 +317,92 @@ export default function Landing() {
               </div>
             </div>
           ))}
+        </section>
+
+        {/* What It Does */}
+        <section style={{ padding: '5rem 1.5rem', background: '#fff', borderTop: '1px solid #E5E5E5' }}>
+          <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.5rem', fontWeight: 700, marginBottom: '3rem', color: '#000' }}>What It Does</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+              <div style={{ padding: '1.5rem', background: '#F9FAFB', borderRadius: '1rem', border: '1px solid #E5E5E5' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🌍</div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem', color: '#000' }}>Local Yield, Global Scale</h3>
+                <p style={{ color: '#666', lineHeight: 1.6 }}>Earn yield on your local currency stablecoins. No conversions, no slippage, just pure yield.</p>
+              </div>
+              <div style={{ padding: '1.5rem', background: '#F9FAFB', borderRadius: '1rem', border: '1px solid #E5E5E5' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚡</div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem', color: '#000' }}>Auto-Compounding</h3>
+                <p style={{ color: '#666', lineHeight: 1.6 }}>Automated yield strategies that compound every 4 hours. Set it and forget it.</p>
+              </div>
+              <div style={{ padding: '1.5rem', background: '#F9FAFB', borderRadius: '1rem', border: '1px solid #E5E5E5' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>📊</div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem', color: '#000' }}>Real-Time Analytics</h3>
+                <p style={{ color: '#666', lineHeight: 1.6 }}>Live APY, TVL, and risk scores for informed decision making.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* The Problem It Solves */}
+        <section style={{ padding: '5rem 1.5rem', background: '#000', color: '#fff' }}>
+          <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.5rem', fontWeight: 700, marginBottom: '3rem' }}>The Problem It Solves</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+              <div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: '#fff' }}>USD Dominance</h3>
+                <p style={{ color: '#999', lineHeight: 1.8, fontSize: '1.125rem' }}>Global DeFi is dollar-denominated. Local users lose 2-5% on conversion slippage and face constant currency exposure.</p>
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: '#fff' }}>FX Risk</h3>
+                <p style={{ color: '#999', lineHeight: 1.8, fontSize: '1.125rem' }}>Your yield should match your spending power. Stop losing money to currency fluctuations.</p>
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: '#fff' }}>Technical Complexity</h3>
+                <p style={{ color: '#999', lineHeight: 1.8, fontSize: '1.125rem' }}>Multiple chains, bridges, and AMMs create barriers to entry and security risks.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Technologies Used */}
+        <section style={{ padding: '5rem 1.5rem', background: '#F9FAFB', borderTop: '1px solid #E5E5E5' }}>
+          <div style={{ maxWidth: '80rem', margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.5rem', fontWeight: 700, marginBottom: '3rem', color: '#000' }}>Technologies Used</h2>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap' }}>
+              <div style={{ padding: '1.5rem 2rem', background: '#fff', borderRadius: '1rem', border: '1px solid #E5E5E5', minWidth: '150px' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚛️</div>
+                <div style={{ fontWeight: 700, color: '#000' }}>React + Vite</div>
+              </div>
+              <div style={{ padding: '1.5rem 2rem', background: '#fff', borderRadius: '1rem', border: '1px solid #E5E5E5', minWidth: '150px' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔐</div>
+                <div style={{ fontWeight: 700, color: '#000' }}>Privy</div>
+              </div>
+              <div style={{ padding: '1.5rem 2rem', background: '#fff', borderRadius: '1rem', border: '1px solid #E5E5E5', minWidth: '150px' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⬡</div>
+                <div style={{ fontWeight: 700, color: '#000' }}>Polygon PoS</div>
+              </div>
+              <div style={{ padding: '1.5rem 2rem', background: '#fff', borderRadius: '1rem', border: '1px solid #E5E5E5', minWidth: '150px' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📈</div>
+                <div style={{ fontWeight: 700, color: '#000' }}>Viem</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* What's Next */}
+        <section style={{ padding: '5rem 1.5rem', background: '#fff', borderTop: '1px solid #E5E5E5' }}>
+          <div style={{ maxWidth: '80rem', margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.5rem', fontWeight: 700, marginBottom: '1.5rem', color: '#000' }}>What's Next for RegioYield</h2>
+            <p style={{ color: '#666', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto 3rem', lineHeight: 1.6 }}>
+              Expanding to more regions, adding more stablecoins, and building cross-chain liquidity pools. Join us in revolutionizing global DeFi access.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+              <span style={{ padding: '0.5rem 1rem', background: '#F3F4F6', borderRadius: '9999px', color: '#666', fontSize: '0.875rem' }}>More Regions</span>
+              <span style={{ padding: '0.5rem 1rem', background: '#F3F4F6', borderRadius: '9999px', color: '#666', fontSize: '0.875rem' }}>Cross-Chain</span>
+              <span style={{ padding: '0.5rem 1rem', background: '#F3F4F6', borderRadius: '9999px', color: '#666', fontSize: '0.875rem' }}>Governance Token</span>
+              <span style={{ padding: '0.5rem 1rem', background: '#F3F4F6', borderRadius: '9999px', color: '#666', fontSize: '0.875rem' }}>Mobile App</span>
+            </div>
+          </div>
         </section>
 
         <footer className="landing-footer" style={{ background: '#F9FAFB', borderTop: '1px solid #E5E5E5' }}>

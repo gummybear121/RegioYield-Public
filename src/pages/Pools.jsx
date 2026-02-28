@@ -48,6 +48,20 @@ const poolData = [
   },
   {
     id: 4,
+    poolId: 'cngn',
+    region: 'NG',
+    regionClass: 'region-ng',
+    name: 'cNGN',
+    platform: 'Aave V3',
+    regionFull: 'AFRICA',
+    apy: '12.5%',
+    tvl: '$45.0M',
+    risk: 'B+',
+    accent: 'gold',
+    status: 'Live',
+  },
+  {
+    id: 5,
     poolId: 'xidr',
     region: 'ID',
     regionClass: 'region-jp',
@@ -62,7 +76,7 @@ const poolData = [
   },
 ];
 
-const filters = ['All Markets', 'LATAM', 'APAC'];
+const filters = ['All Markets', 'LATAM', 'APAC', 'AFRICA'];
 
 export default function Pools() {
   const [activeFilter, setActiveFilter] = useState('All Markets');
