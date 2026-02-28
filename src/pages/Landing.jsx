@@ -42,114 +42,230 @@ export default function Landing() {
       backgroundColor: '#FFFFFF', 
       minHeight: '100vh',
       fontFamily: "'Inter', sans-serif",
-      overflowY: 'auto',
-      height: '100%'
+      overflowX: 'hidden'
     }}>
-      <nav className="landing-nav">
-        <div className="landing-nav-inner">
-          <div className="landing-brand">
+      <nav style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '80px',
+        background: 'rgba(255, 255, 255, 0.8)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid #F3F4F6',
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 2rem'
+      }}>
+        <div style={{ width: '100%', maxWidth: '1280px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <div style={{ 
-              width: '24px', 
-              height: '24px', 
-              border: '1.5px solid #000', 
-              transform: 'rotate(45deg)', 
-              position: 'relative',
-              background: '#000'
+              width: '32px', 
+              height: '32px', 
+              background: '#000', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              transform: 'rotate(45deg)'
             }}>
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '8px',
-                height: '8px',
-                background: '#fff',
-                borderRadius: '50%'
-              }}></div>
+              <div style={{ width: '8px', height: '8px', background: '#fff', borderRadius: '50%' }}></div>
             </div>
-            <span style={{ color: '#000' }}>RegioYield Protocol</span>
+            <span style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em' }}>RegioYield</span>
           </div>
-          <div className="landing-nav-links">
-            <Link to="/pools" className="type-label hover-invert" style={{ textDecoration: 'none', color: '#666' }}>Markets</Link>
-            <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Governance</span>
-            <span className="type-label cursor-pointer hover-invert" style={{ color: '#666' }}>Developers</span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+            <Link to="/pools" style={{ fontSize: '0.875rem', fontWeight: 600, color: '#666', cursor: 'pointer', textDecoration: 'none' }}>Protocol</Link>
+            <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#666', cursor: 'pointer' }}>Governance</span>
+            <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#666', cursor: 'pointer' }}>Security</span>
           </div>
-          <div className="landing-nav-actions">
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <button style={{ background: 'transparent', border: '1px solid #E5E5E5', padding: '0.625rem 1.25rem', borderRadius: '2rem', fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer' }}>Documentation</button>
             <button 
-              className="type-label hover-opacity" 
-              style={{ 
-                background: '#000', 
-                border: 'none', 
-                color: '#fff', 
-                cursor: 'pointer',
-                fontFamily: "'Inter', sans-serif",
-                padding: '0.5rem 1rem',
-                borderRadius: '2rem'
-              }}
               onClick={handleWalletClick}
+              style={{ background: '#000', color: '#fff', border: 'none', padding: '0.625rem 1.25rem', borderRadius: '2rem', fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             >
               {ready && user ? 'Launch App' : 'Connect Wallet'}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
             </button>
           </div>
         </div>
       </nav>
 
-      <main className="landing-main">
-        <section className="landing-hero">
-          <div className="landing-hero-grid">
-            <div className="landing-hero-left animate-enter">
+      <main>
+        <section className="grid-bg" style={{ 
+          minHeight: 'calc(100vh - 80px)', 
+          padding: '100px 2rem 40px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <div style={{ width: '100%', maxWidth: '1280px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '4rem', alignItems: 'center' }}>
+            <div style={{ gridColumn: 'span 6', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
               <h1 style={{ 
-                fontFamily: "'Space Grotesk', sans-serif", 
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 'clamp(3rem, 6vw, 5.5rem)', 
                 fontWeight: 700, 
-                lineHeight: 0.85, 
-                letterSpacing: '-0.04em', 
-                textTransform: 'uppercase',
-                fontSize: 'clamp(3rem, 14vw, 8rem)',
-                marginBottom: '2rem',
+                lineHeight: 1, 
+                letterSpacing: '-0.04em',
                 color: '#000'
               }}>
-                LOCAL<br />
-                YIELD<br />
                 GLOBAL<br />
-                SCALE
+                YIELDS,<br />
+                <span style={{ color: '#9CA3AF' }}>LOCAL<br />
+                CONTEXT.</span>
               </h1>
+
+              <p style={{ fontSize: '1.25rem', color: '#666', lineHeight: 1.6, maxWidth: '540px' }}>
+                The first aggregation layer for local stablecoin liquidity pools. Earn up to 14.2% APY on non-USD assets with automated delta-neutral hedging.
+              </p>
+
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button 
+                  onClick={handleWalletClick}
+                  style={{ background: '#000', color: '#fff', border: 'none', padding: '1.25rem 2.5rem', borderRadius: '3rem', fontSize: '1.125rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+                >
+                  Start Earning
+                </button>
+                <button style={{ background: '#fff', color: '#000', border: '1px solid #E5E5E5', padding: '1.25rem 2.5rem', borderRadius: '3rem', fontSize: '1.125rem', fontWeight: 800, cursor: 'pointer' }}>
+                  How it works
+                </button>
+              </div>
             </div>
 
-            <div className="landing-hero-right animate-enter delay-100">
-              <div className="landing-hero-text">
-                <p className="hero-description" style={{ color: '#666' }}>
-                  The first decentralized liquidity layer for non-USD stablecoins. Earn native yield on EUR, JPY, and BRL.
-                </p>
+            <div style={{ gridColumn: 'span 6', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {/* Background Circular Visual */}
+              <div style={{ 
+                position: 'absolute', 
+                width: '600px', 
+                height: '600px', 
+                background: 'radial-gradient(circle, rgba(243, 244, 246, 0.8) 0%, rgba(255, 255, 255, 0) 70%)',
+                border: '1px solid #F3F4F6',
+                borderRadius: '50%',
+                zIndex: 0
+              }}></div>
+
+              {/* Main JPYC Strategy Card */}
+              <div className="animate-float" style={{ 
+                width: '420px', 
+                background: '#fff', 
+                border: '1px solid #E5E5E5', 
+                borderRadius: '2.5rem', 
+                padding: '2rem', 
+                boxShadow: '0 40px 80px -20px rgba(0,0,0,0.15)',
+                zIndex: 20,
+                position: 'relative'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800 }}>JP</div>
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: '1.25rem' }}>JPYC Strategy</div>
+                      <div style={{ fontSize: '0.875rem', color: '#666' }}>Uniswap V3 • Tokyo</div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ color: '#16A34A', fontWeight: 800, fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.25rem', justifyContent: 'flex-end' }}>↑ 14.2%</div>
+                    <div style={{ fontSize: '0.75rem', color: '#999', fontWeight: 600 }}>Projected APY</div>
+                  </div>
+                </div>
+
+                {/* Bars Chart */}
+                <div style={{ height: '100px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '0.75rem', marginBottom: '2rem' }}>
+                  <div style={{ flex: 1, background: '#F3F4F6', height: '40%', borderRadius: '4px' }}></div>
+                  <div style={{ flex: 1, background: '#F3F4F6', height: '65%', borderRadius: '4px' }}></div>
+                  <div style={{ flex: 1, background: '#F3F4F6', height: '50%', borderRadius: '4px' }}></div>
+                  <div style={{ flex: 1, background: '#000', height: '90%', borderRadius: '4px' }}></div>
+                  <div style={{ flex: 1, background: '#F3F4F6', height: '70%', borderRadius: '4px' }}></div>
+                  <div style={{ flex: 1, background: '#F3F4F6', height: '60%', borderRadius: '4px' }}></div>
+                  <div style={{ flex: 1, background: '#F3F4F6', height: '85%', borderRadius: '4px' }}></div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <div style={{ flex: 1, background: '#F9FAFB', borderRadius: '1.25rem', padding: '1.25rem', border: '1px solid #F3F4F6' }}>
+                    <div style={{ fontSize: '0.65rem', color: '#999', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Hedging</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 700 }}>
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16A34A' }}></div>
+                      Delta Neutral
+                    </div>
+                  </div>
+                  <div style={{ flex: 1, background: '#F9FAFB', borderRadius: '1.25rem', padding: '1.25rem', border: '1px solid #F3F4F6' }}>
+                    <div style={{ fontSize: '0.65rem', color: '#999', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Risk Score</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 700 }}>
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16A34A' }}></div>
+                      Low (A+)
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="landing-hero-buttons">
-                <Link 
-                  to={ready && user ? '/app' : '#'} 
-                  className="btn-brutal landing-btn"
-                  style={{ animation: 'blink 1.5s infinite', textDecoration: 'none', background: '#000', color: '#fff', border: '1px solid #000' }}
-                  onClick={(e) => {
-                    if (!(ready && user)) {
-                      e.preventDefault();
-                      login().then(() => setTimeout(switchToPolygon, 500));
-                    } else {
-                      switchToPolygon();
-                    }
-                  }}
-                >
-                  Launch App 
-                  <span className="btn-arrow">→</span>
-                </Link>
-                <button className="btn-brutal landing-btn" style={{ background: '#fff', color: '#000', border: '1px solid #E5E5E5' }}>
-                  Documentation
-                </button>
-                <div className="landing-secured">
-                  <span className="type-label" style={{ color: '#999' }}>Secured by</span>
-                  <span className="landing-secured-name" style={{ color: '#666' }}>Polygon PoS</span>
+              {/* Smaller floating card: Regions */}
+              <div className="animate-float" style={{ 
+                position: 'absolute', 
+                bottom: '-15%', 
+                left: '-25%', 
+                background: '#fff', 
+                border: '1px solid #E5E5E5', 
+                borderRadius: '1.5rem', 
+                padding: '1.25rem', 
+                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                zIndex: 30,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                animationDelay: '1s'
+              }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#E0E7FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#999', textTransform: 'uppercase' }}>Regions</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.125rem' }}>Global Coverage</div>
+                </div>
+              </div>
+
+              {/* Smaller floating card: Compounding */}
+              <div className="animate-float" style={{ 
+                position: 'absolute', 
+                top: '5%', 
+                right: '-25%', 
+                background: '#fff', 
+                border: '1px solid #E5E5E5', 
+                borderRadius: '1.5rem', 
+                padding: '1.25rem', 
+                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                zIndex: 10,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                animationDelay: '2s'
+              }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#FEF3C7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#999', textTransform: 'uppercase' }}>Auto-Compound</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.125rem' }}>Every 4 Hours</div>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Scrolling Ticker */}
+        <div style={{ borderTop: '1px solid #E5E5E5', borderBottom: '1px solid #E5E5E5', background: '#fff', padding: '1.5rem 0', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'ticker 40s linear infinite' }}>
+            {[...markets, ...markets, ...markets].map((market, idx) => (
+              <div key={idx} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', marginRight: '3rem', opacity: 0.8 }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16A34A' }}></span>
+                <span style={{ fontWeight: 700, fontSize: '1.125rem', color: '#000' }}>{market.ticker} Pool</span>
+                <span style={{ background: '#000', color: '#fff', fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '9999px', fontFamily: 'monospace' }}>{market.apy} APY</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <section className="landing-problem-solution">
           <div className="landing-problem animate-enter delay-200" style={{ background: '#F9FAFB', border: '1px solid #E5E5E5' }}>
